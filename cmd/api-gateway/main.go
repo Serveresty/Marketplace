@@ -120,13 +120,21 @@ func main() {
 			})
 		}
 
+		recomendation := authorizedOnly.Group("/recomendation")
+		{
+			servicePath := "/recomendation"
+			recomendation.Any("/*proxyPath", func(c *gin.Context) {
+				proxy(c, "http://localhost:8090", servicePath)
+			})
+		}
+
 	}
 
 	reviewService := router.Group("/review") // Требует авторизацию на некоторые эндпоинты
 	{
 		servicePath := "/review"
 		reviewService.Any("/*proxyPath", func(c *gin.Context) {
-			proxy(c, "http://localhost:8090", servicePath)
+			proxy(c, "http://localhost:8091", servicePath)
 		})
 	}
 
